@@ -1,0 +1,16 @@
+# Compilação e Build (Maven)
+target/
+
+# Configurações do Eclipse / STS
+.settings/
+.classpath
+.project
+
+# Variáveis de Ambiente locais (Senhas e Credenciais)
+.env
+
+# IDEs e Sistema Operacional
+.DS_Store
+Thumbs.db
+.idea/
+*.iml
