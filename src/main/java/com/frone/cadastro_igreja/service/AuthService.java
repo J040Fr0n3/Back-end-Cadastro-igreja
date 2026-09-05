@@ -6,14 +6,19 @@ import com.frone.cadastro_igreja.dto.LoginRequest;
 import com.frone.cadastro_igreja.dto.LoginResponse;
 import com.frone.cadastro_igreja.entity.Usuario;
 import com.frone.cadastro_igreja.repository.UsuarioRepository;
+import com.frone.cadastro_igreja.security.JwtService;
 
 @Service
 public class AuthService {
 	
 	private final UsuarioRepository usuarioRepository;
+	private final JwtService jwtService;
 	
-	public AuthService(UsuarioRepository usuarioRepository) {
+	public AuthService(UsuarioRepository usuarioRepository, JwtService jwtService) {
+		
 		this.usuarioRepository = usuarioRepository;
+		this.jwtService = jwtService;
+		
 	}
 	
 	public LoginResponse login(LoginRequest request) {
@@ -21,17 +26,21 @@ public class AuthService {
 		Usuario usuario = usuarioRepository.findByCpf(request.getCpf()).orElse(null);
 		
 		if(usuario == null) {
-			return new LoginResponse("Usuario ou Senha Inválidos", null, null);
-		}
+			
+			return new LoginResponse("Usuario ou senha inválidos", null);
+			
+		};
 		
-		//Senha=Senha Mudar para hash futuramente
 		if(!usuario.getSenhaHash().equals(request.getSenha())) {
 			
-			return new LoginResponse("Usuario ou Senha Inválidos", null, null);
+			return new LoginResponse("Usuario ou senha inválidos", null);
 			
 		}
 		
-		return new LoginResponse("Login realizado com sucesso", usuario.getIdusuario(), usuario.getNome());
+		String token = jwtService.gerarToken(usuario.getIdusuario(), usuario.getNome());
+		
+		return new LoginResponse("Login realizado com sucesso", token);
+		
 	}
 	
 }

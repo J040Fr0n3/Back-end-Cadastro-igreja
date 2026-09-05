@@ -28,7 +28,7 @@ public class AuthController {
 		
 		LoginResponse response = authService.login(request);
 		
-		if(response.getIdUsuario()==null) {
+		if(response.getToken()==null) {
 			
 			return ResponseEntity.status(401).body(response);
 		}

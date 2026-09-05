@@ -3,14 +3,12 @@ package com.frone.cadastro_igreja.dto;
 public class LoginResponse {
 	
 	private String mensagem;
-	private Integer idUsuario;
-	private String nome;
+	private String token;
 	
-	public LoginResponse(String mensagem, Integer idusuario, String nome) {
+	public LoginResponse(String mensagem, String token) {
 		
 		this.mensagem = mensagem;
-		this.idUsuario = idusuario;
-		this.nome = nome;
+		this.token = token;
 		
 	}
 
@@ -18,12 +16,8 @@ public class LoginResponse {
 		return mensagem;
 	}
 
-	public Integer getIdUsuario() {
-		return idUsuario;
-	}
-
-	public String getNome() {
-		return nome;
+	public String getToken() {
+		return token;
 	}
 	
 	
