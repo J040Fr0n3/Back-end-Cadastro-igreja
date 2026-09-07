@@ -12,7 +12,7 @@ import com.frone.cadastro_igreja.service.AuthService;
 
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 public class AuthController {
 	
 	private final AuthService authService;

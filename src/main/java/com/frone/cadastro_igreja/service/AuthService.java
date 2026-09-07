@@ -1,23 +1,25 @@
 package com.frone.cadastro_igreja.service;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.frone.cadastro_igreja.dto.LoginRequest;
 import com.frone.cadastro_igreja.dto.LoginResponse;
 import com.frone.cadastro_igreja.entity.Usuario;
 import com.frone.cadastro_igreja.repository.UsuarioRepository;
-import com.frone.cadastro_igreja.security.JwtService;
 
 @Service
 public class AuthService {
 	
 	private final UsuarioRepository usuarioRepository;
 	private final JwtService jwtService;
+	private final PasswordEncoder passwordEncoder;
 	
-	public AuthService(UsuarioRepository usuarioRepository, JwtService jwtService) {
+	public AuthService(UsuarioRepository usuarioRepository, JwtService jwtService, PasswordEncoder passwordEncoder) {
 		
 		this.usuarioRepository = usuarioRepository;
 		this.jwtService = jwtService;
+		this.passwordEncoder = passwordEncoder;
 		
 	}
 	
@@ -31,7 +33,7 @@ public class AuthService {
 			
 		};
 		
-		if(!usuario.getSenhaHash().equals(request.getSenha())) {
+		if(!passwordEncoder.matches(request.getSenha(), usuario.getSenhaHash())) {
 			
 			return new LoginResponse("Usuario ou senha inválidos", null);
 			

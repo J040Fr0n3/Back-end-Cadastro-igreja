@@ -1,4 +1,4 @@
-package com.frone.cadastro_igreja.security;
+package com.frone.cadastro_igreja.service;
 
 import java.util.Date;
 
@@ -23,16 +23,17 @@ public class JwtService {
 		
 	}
 	
+
 	public String gerarToken(Integer idUsuario, String nome) {
 		
 		Date agora = new Date();
 		Date expiracao = new Date(agora.getTime() + EXPIRATION);
 		
 		return Jwts.builder()
-				.setSubject(String.valueOf(idUsuario))
+				.subject(String.valueOf(idUsuario))
 				.claim("nome", nome)
-				.setIssuedAt(agora)
-				.setExpiration(expiracao)
+				.issuedAt(agora)
+				.expiration(expiracao)
 				.signWith(getKey())
 				.compact();
 		
